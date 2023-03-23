@@ -12,6 +12,9 @@ db.on("error", () => {
 })
 db.once("open", () => {
   console.log("mongodb connect success")
-  URL.create({ name: "https://www.google.com" })
+  for (let i = 0; i < 17; i++) {
+    URL.create({ name: `${i}` })
+  }
+  // URL.create({ name: "https://www.google.com" })
   console.log("seeder created")
 })
