@@ -4,12 +4,12 @@ const app = express()
 const mongoose = require("mongoose")
 const URL = require("./models/urls")
 const bodyParser = require("body-parser")
-const methodOverride = require("method-override")
+const routes = require("./routes/index")
 
 app.set("view engine", "handlebars")
 app.engine("handlebars", exphdbars({ defaultLayout: "main" }))
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(methodOverride("_method"))
+app.use(routes)
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config()
@@ -23,34 +23,6 @@ db.on("error", () => {
 })
 db.once("open", () => {
   console.log("mongodb success")
-})
-
-app.get("/", (req, res) => {
-  res.render("index")
-})
-
-app.post("/url", (req, res) => {
-  const name = req.body.name
-  URL.create({ name: name })
-    .then(() => {
-      return URL.findOne({ name: name })
-    })
-    .then(url => {
-      const id = url._id.toString()
-      const urlId = id.slice(-6)
-      res.redirect(`/url/${id}`)
-      url.urlShortener = `https://ptt.cc/${urlId}`
-      return url.save()
-    })
-    .catch(error => console.log(error))
-})
-
-app.get("/url/:id", (req, res) => {
-  const id = req.params.id
-  return URL.findById(id)
-    .lean()
-    .then((url) => res.render("new", { url }))
-    .catch(error => console.log(error))
 })
 
 app.get("/:urlId", (req, res) => {
