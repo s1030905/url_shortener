@@ -16,25 +16,20 @@ function url_shortener(url) {
   const lowerCase = "abcdefghijklmnopqrstuvwxyz"
   const upperCase = lowerCase.toUpperCase()
   const number = "1234567890"
-  const symbol = "!@#$%^&*_+\=-"
-  const allLetter = lowerCase + upperCase + number + symbol
-  console.log(allLetter)
+  const allLetter = lowerCase + upperCase + number
   // 定義短網址 example: https://ppt.cc/fHbXUx
-  const urlShorter = `https://ppt.cc/${urlId}`
-  const urlId = ""
+  let urlId = ""
   for (let i = 0; i < 6; i++) {
-    const single = lowerCase.indexOf(Math.floor(Math.random() * (number.length)))
+    const single = allLetter[Math.floor(Math.random() * (allLetter.length))]
     urlId += single
   }
-  console.log(Math.floor(Math.random() * (number.length)))
-  console.log(urlId)
-
-  // 產生短網址
-
+  const urlShorter = `http://localhost:3000/r/${urlId}`
 
   // 避免短網址重複
 
 
+  // 產生短網址
+  return urlShorter
 }
 
-module.exports = urlShortener
+module.exports = url_shortener

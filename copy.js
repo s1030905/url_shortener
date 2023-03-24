@@ -5,8 +5,8 @@ function copy() {
     // const inputText = document.querySelector("#inputText")
     // inputText.value = url.innerText
     navigator.clipboard.writeText(url.innerText)
+    alert("123")
   })
-  alert("123")
 }
 copy()
-module.exports = copy
+// module.exports = copy

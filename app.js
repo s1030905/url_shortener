@@ -6,6 +6,7 @@ const bodyParser = require("body-parser")
 const routes = require("./routes/index")
 require("./config/mongoose")
 
+
 // 設定view engine
 app.set("view engine", "handlebars")
 app.engine("handlebars", exphdbars({ defaultLayout: "main" }))

@@ -2,52 +2,44 @@
 const express = require("express")
 const router = express.Router()
 const URL = require("../../models/urls")
+const generator = require("../../url_shortener")
 
 // router分流
 router.post("/", (req, res) => {
   const name = req.body.name
-  if (URL.findOne({ name: name }).name !== name) {
-    console.log(URL.find({ name: name }))
-    // console.log(typeof (URL.findOne({ name: name })))
-    console.log(name)
-    URL.create({ name: name })
-      .then(() => {
-        return URL.findOne({ name: name })
-      })
-      .then(url => {
-        const id = url._id.toString()
-        const urlId = id.slice(-6)
-        res.redirect(`/url/${id}`)
-        url.urlShortener = `http://localhost:3000/${urlId}`
-        return url.save()
-      })
-      .catch(error => console.log(error))
-  }
-  else {
-    return res.send("重複了")
-  }
+  // 判斷資料庫是否存在相同網址
+  URL.findOne({ name: name })
+    .then(url => {
+      // 沒有=>新建資料
+      if (!url) {
+        URL.create({ name: name })
+          .then(() => {
+            return URL.findOne({ name: name })
+          })
+          .then(url => {
+            const id = url._id
+            res.redirect(`/url/${id}`)
+            const urlShortener = generator()
+            url.urlShortener = urlShortener
+            return url.save()
+          })
+          .catch(error => console.log(error))
+      }
+      // 有=>redirect存在網址
+      else {
+        const id = url._id
+        res.redirect(`http://localhost:3000/url/${id}`)
+      }
+    })
 
-  // URL.create({ name: name })
-  //   .then(() => {
-  //     return URL.findOne({ name: name })
-  //   })
-  //   .then(url => {
-  //     const id = url._id.toString()
-  //     const urlId = id.slice(-6)
-  //     res.redirect(`/url/${id}`)
-  //     url.urlShortener = `http://localhost:3000/${urlId}`
-  //     return url.save()
-  //   })
-  //   .catch(error => console.log(error))
 })
 
 router.get("/:id", (req, res) => {
   const id = req.params.id
-  const urlId = id.slice(-6)
+  // const urlId = id.slice(-6)
   return URL.findById(id)
     .lean()
-    .then((url) => res.render("new", { url, urlId }))
-    // .then(() => copy())
+    .then((url) => res.render("new", { url }))
     .catch(error => console.log(error))
 })
 
