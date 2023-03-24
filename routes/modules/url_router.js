@@ -1,7 +1,9 @@
+// 載入框架、函式庫、模組...
 const express = require("express")
 const router = express.Router()
 const URL = require("../../models/urls")
 
+// router分流
 router.post("/", (req, res) => {
   const name = req.body.name
   URL.create({ name: name })

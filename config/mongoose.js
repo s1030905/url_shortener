@@ -1,4 +1,7 @@
+// 載入框架、函式庫...
 const mongoose = require("mongoose")
+
+//連結MONGODB、利用dotenv遮蓋敏感資訊
 const db = mongoose.connection
 
 if (process.env.NODE_ENV !== "production") {

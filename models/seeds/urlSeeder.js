@@ -1,5 +1,4 @@
 const URL = require("../urls")
-// require("../../config/mongoose")
 const mongoose = require("mongoose")
 const db = mongoose.connection
 
