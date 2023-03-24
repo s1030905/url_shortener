@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const db = mongoose.connection
 
 if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config({ path: '../../.env' })
+  require("dotenv").config({ path: 'C:/Users/8787/git/ac_exercise/url_shortener/.env' })
 }
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
