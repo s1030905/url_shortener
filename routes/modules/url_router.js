@@ -7,7 +7,7 @@ const generator = require("../../url_shortener")
 // router分流
 router.post("/", (req, res) => {
   const name = req.body.name
-  // 判斷資料庫是否存在相同網址
+  // 判斷資料庫是否存在相同網址 ----------------------------------->例外處理
   URL.findOne({ name: name })
     .then(url => {
       // 沒有=>新建資料

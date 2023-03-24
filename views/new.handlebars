@@ -3,7 +3,20 @@
     <div class="d-flex align-items-center">
       <div style="margin-right: 10px"><a href="{{url.urlShortener}}" class="fs-3" id="url">{{url.urlShortener}}</a>
       </div>
-      <div><i class="fa-solid fa-copy fa-2xl btn" id="copyBtn"></i></div>
+      <div id="copyBtn"><i class="fa-solid fa-copy fa-2xl btn"></i></div>
     </div>
 
 </div>
+
+{{!------------------------------------------------------ 挑戰copy功能 --}}
+<script>
+  function copy() {
+    const copyBtn = document.querySelector("#copyBtn")
+    const url = document.querySelector("#url")
+    copyBtn.addEventListener("click", (event) => {
+      navigator.clipboard.writeText(url.innerText)
+      alert("Already copied.")
+    })
+  }
+  copy()
+</script>

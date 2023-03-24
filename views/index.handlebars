@@ -1,10 +1,29 @@
 <form class="row gy-2 gx-3 align-items-center" action="/url" method="POST">
   <div class="input-group">
     <div class="col-auto">
-      <input type="text" class="form-control" id="" placeholder="URL" name="name">
+      <input type="text" class="form-control" id="input" placeholder="URL" name="name" value="">
     </div>
-    <div class="col-auto">
+    <div class="col-auto" id="submitBtn">
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </div>
 </form>
+
+{{!------------------------------------------------------ 例外處理 --}}
+<script>
+  function alertInput() {
+    const input = document.querySelector("#input")
+    const submitBtn = document.querySelector("#submitBtn")
+    submitBtn.addEventListener("click", (event) => {
+      try {
+        if (!input.value) {
+          event.preventDefault()
+          throw new Error("Required field is blank")
+        }
+      } catch (error) {
+        alert("Required field is blank")
+      }
+    })
+  }
+  alertInput()
+</script>
