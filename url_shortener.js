@@ -37,4 +37,4 @@ function url_shortener(url) {
 
 }
 
-url_shortener(1)
+module.exports = urlShortener

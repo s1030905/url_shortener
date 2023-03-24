@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 
 router.get("/:urlId", (req, res) => {
   const urlId = req.params.urlId
-  URL.findOne({ urlShortener: `https://ptt.cc/${urlId}` })
+  URL.findOne({ urlShortener: `http://localhost:3000/${urlId}` })
     .then((url) => {
       console.log(url)
       res.redirect(url.name)
