@@ -28,20 +28,23 @@ router.post("/", (req, res) => {
       // 有=>redirect存在網址
       else {
         const id = url._id
-        res.redirect(`http://localhost:3000/url/${id}`)
+        return URL.findById(id)
+          .lean()
+          .then((url) => res.render("new", { url }))
+          .catch(error => console.log(error))
+        // res.redirect(`http://localhost:3000/url/${id}`)
       }
     })
 
 })
 
-router.get("/:id", (req, res) => {
-  const id = req.params.id
-  // const urlId = id.slice(-6)
-  return URL.findById(id)
-    .lean()
-    .then((url) => res.render("new", { url }))
-    .catch(error => console.log(error))
-})
+// router.get("/:id", (req, res) => {
+//   const id = req.params.id
+//   return URL.findById(id)
+//     .lean()
+//     .then((url) => res.render("new", { url }))
+//     .catch(error => console.log(error))
+// })
 
 
 module.exports = router
