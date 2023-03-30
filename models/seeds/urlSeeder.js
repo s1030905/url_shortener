@@ -16,7 +16,7 @@ db.on("error", () => {
 db.once("open", () => {
   console.log("mongodb connect success")
   for (i = 0; i < seeder.length; i++) {
-    URL.create({ name: "https://www.google.com" })
+    URL.create(seeder[i])
       .then((url) => {
         const urlShortener = generator()
         url.urlShortener = urlShortener

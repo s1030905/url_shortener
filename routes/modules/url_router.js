@@ -18,10 +18,16 @@ router.post("/", (req, res) => {
           })
           .then(url => {
             const id = url._id
-            res.redirect(`/url/${id}`)
+            // res.redirect(`/url/${id}`)
             const urlShortener = generator()
             url.urlShortener = urlShortener
             return url.save()
+              .then(() => {
+                return URL.findById(id)
+                  .lean()
+                  .then((url) => res.render("new", { url }))
+                  .catch(error => console.log(error))
+              })
           })
           .catch(error => console.log(error))
       }
@@ -32,19 +38,9 @@ router.post("/", (req, res) => {
           .lean()
           .then((url) => res.render("new", { url }))
           .catch(error => console.log(error))
-        // res.redirect(`http://localhost:3000/url/${id}`)
       }
     })
 
 })
-
-// router.get("/:id", (req, res) => {
-//   const id = req.params.id
-//   return URL.findById(id)
-//     .lean()
-//     .then((url) => res.render("new", { url }))
-//     .catch(error => console.log(error))
-// })
-
 
 module.exports = router
